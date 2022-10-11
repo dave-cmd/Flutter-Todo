@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run: flutter doctor
-      - run: flutter test
+#       - run: flutter test
       - run: flutter build apk --release
       - run:
           command: mkdir -p /tmp/apps
