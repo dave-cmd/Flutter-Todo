@@ -1,6 +1,9 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:todoapp/database_helper.dart';
+import 'package:todoapp/models/todo.dart';
 
 class TaskCardWidget extends StatelessWidget {
   final String? title;
@@ -51,9 +54,8 @@ class TaskCardWidget extends StatelessWidget {
 }
 
 class TodoWidget extends StatelessWidget {
-  final String? text;
-  final bool isDone;
-  const TodoWidget({super.key, this.text, required this.isDone});
+  final Todo? todo;
+  const TodoWidget({required this.todo});
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +71,10 @@ class TodoWidget extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
-              color: isDone
+              color: todo?.isDone == 1
                   ? Color.fromARGB(240, 214, 9, 197)
                   : Colors.transparent,
-              border: isDone
+              border: todo?.isDone == 1
                   ? null
                   : Border.all(
                       color: Color.fromARGB(255, 117, 119, 121),
@@ -87,10 +89,12 @@ class TodoWidget extends StatelessWidget {
             ),
           ),
           Text(
-            text ?? '(unnamed todo)',
+            todo?.title ?? '(unnamed todo)',
             style: TextStyle(
-              fontWeight: isDone ? FontWeight.bold : FontWeight.w500,
-              color: isDone ? Color.fromARGB(255, 33, 20, 88) : Colors.grey,
+              fontWeight: todo?.isDone == 1 ? FontWeight.bold : FontWeight.w500,
+              color: todo?.isDone == 1
+                  ? Color.fromARGB(255, 33, 20, 88)
+                  : Colors.grey,
               fontSize: 16.0,
             ),
           ),
